@@ -103,22 +103,25 @@ For all other queries:
 ## Project Structure
 
 ```
-rag-bot/
-│
-├── app.py                # FastAPI application and API endpoints
-├── Dockerfile            # Container configuration
-├── requirements.txt      # Python dependencies
-├── README.md
+rag-document-qa-api
 │
 ├── rag/
 │   ├── pipeline.py       # RAG pipeline (retrieval + generation logic)
 │   └── ingestion.py      # Document loading, chunking, and indexing
 │
-├── uploads/              # Uploaded documents
-├── chroma_index/         # Persistent vector database
+├── tests/
+│   ├── test_ingestion.py
+│   └── test_pipeline.py
 │
-├── test_pipeline.py      # Simple pipeline test
-└── test_ingestion.py     # Indexing test
+├── .dockerignore
+├── .env.example
+├── .gitignore
+├── Dockerfile            # Container configuration
+├── LICENSE
+├── README.md
+├── app.py                # FastAPI application and API endpoints
+├── requirements.txt      # Python dependencies
+└── test.pdf              # Example .pdf file for testing 
 ```
 
 ### Key Components
@@ -150,6 +153,7 @@ Uploads and indexes a PDF document.
 - Reloads the RAG pipeline
 
 **Response:**
+
 ```json
 {
   "status": "ok",
@@ -164,6 +168,7 @@ Uploads and indexes a PDF document.
 Answers a question based on the indexed document.
 
 **Request (application/json):**
+
 ```json
 {
   "query": "What is self-attention?"
@@ -171,6 +176,7 @@ Answers a question based on the indexed document.
 ```
 
 **Response:**
+
 ```json
 {
   "answer": "An attention mechanism relating different positions...",
@@ -194,22 +200,27 @@ Answers a question based on the indexed document.
 ### Option A — Run Locally
 
 #### 1. Create virtual environment
+
 ```bash
+git clone https://github.com/przemekwarnel/rag-document-qa-api.git
 python -m venv .venv
 source .venv/bin/activate
 ```
 
 #### 2. Install dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
 #### 3. Start the API server
+
 ```bash
 uvicorn app:app --reload
 ```
 
 #### Swagger UI will be available at:
+
 ```
 http://127.0.0.1:8000/docs
 ```
@@ -219,16 +230,19 @@ http://127.0.0.1:8000/docs
 ### Option B - Run with Docker
 
 #### 1. Build image
+
 ```bash
 docker build -t rag-bot .
 ```
 
 #### 2. Run container
+
 ```bash
 docker run -p 8000:8000 rag-bot
 ```
 
 #### Swagger UI
+
 ```
 http://127.0.0.1:8000/docs
 ```
@@ -238,12 +252,14 @@ http://127.0.0.1:8000/docs
 ### Example Usage (CLI)
 
 #### Ingest a document:
+
 ```bash
 curl -X POST "http://127.0.0.1:8000/ingest" \
   -F "file=@test.pdf"
   ```
 
 #### Ask a question:
+
 ```bash
 curl -X POST "http://127.0.0.1:8000/ask" \
   -H "Content-Type: application/json" \
