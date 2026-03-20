@@ -1,5 +1,7 @@
 # RAG Bot – Document Question Answering API
 
+## Project Overview
+
 This project implements a lightweight Retrieval-Augmented Generation (RAG) system exposed as a REST API using FastAPI.
 
 The system allows users to:
@@ -16,6 +18,15 @@ The architecture combines:
 - Deterministic lexical verification for "mention/contain/include" queries
 
 The API is fully containerized with Docker and designed to be reproducible and easy to deploy.
+
+## Tech Stack
+
+- **Python**
+- **FastAPI** — REST API
+- **SentenceTransformers** — embedding generation
+- **Chroma** — vector database
+- **Transformers (FLAN-T5)** — answer generation
+- **Docker** — containerization
 
 ## Architecture & System Flow
 
@@ -90,15 +101,6 @@ For all other queries:
 - Explicit retrieval → context construction → generation
 - Transparent source attribution
 - Dockerized and reproducible
-
-## Tech Stack
-
-- **Python**
-- **FastAPI** — REST API
-- **SentenceTransformers** — embedding generation
-- **Chroma** — vector database
-- **Transformers (FLAN-T5)** — answer generation
-- **Docker** — containerization
 
 ## Project Structure
 
